@@ -36,5 +36,8 @@ public class Client {
     private String cnpj;
     @NotEmpty
     private String companyName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "balance_id", referencedColumnName = "id")
+    private Balance balance;
 
 }

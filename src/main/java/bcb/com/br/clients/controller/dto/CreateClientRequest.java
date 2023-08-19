@@ -9,7 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class ClientRequest {
+public class CreateClientRequest {
     @NotEmpty
     private String name;
     @Email
@@ -25,8 +25,8 @@ public class ClientRequest {
     private String cnpj;
     @NotEmpty
     private String companyName;
-    
+
     public Client toModel() {
-        return new Client(null, name, email, telephone, cpf, cnpj,companyName);
+        return new Client(null, name, email, telephone, cpf, cnpj,companyName, null);
     }
 }

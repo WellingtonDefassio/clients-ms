@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientResponse {
+public class CreateClientResponse {
 
     private Long id;
 
@@ -26,8 +26,8 @@ public class ClientResponse {
 
     private String companyName;
 
-    public ClientResponse fromModel(Client client) {
-        return ClientResponse.builder()
+    public CreateClientResponse fromModel(Client client) {
+        return CreateClientResponse.builder()
                 .id(client.getId())
                 .email(client.getEmail())
                 .telephone(client.getTelephone())
