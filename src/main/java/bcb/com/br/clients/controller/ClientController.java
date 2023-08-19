@@ -4,6 +4,8 @@ import bcb.com.br.clients.controller.dto.ClientRequest;
 import bcb.com.br.clients.controller.dto.ClientResponse;
 import bcb.com.br.clients.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +23,6 @@ public class ClientController {
 
     @PostMapping("/create")
     public ResponseEntity<ClientResponse> create(@RequestBody @Valid ClientRequest request) {
-        clientService.createClient(request);
-        return null;
+        return new ResponseEntity<>(clientService.createClient(request), HttpStatus.CREATED);
     }
-
-
 }
