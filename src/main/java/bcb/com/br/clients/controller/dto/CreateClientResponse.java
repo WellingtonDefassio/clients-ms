@@ -26,6 +26,8 @@ public class CreateClientResponse {
 
     private String companyName;
 
+    private CreateBalanceResponse balance;
+
     public CreateClientResponse fromModel(Client client) {
         return CreateClientResponse.builder()
                 .id(client.getId())
@@ -34,6 +36,7 @@ public class CreateClientResponse {
                 .cpf(client.getCpf())
                 .cnpj(client.getCnpj())
                 .companyName(client.getCompanyName())
+                .balance(new CreateBalanceResponse().fromModel(client.getBalance()))
                 .build();
     }
 }
