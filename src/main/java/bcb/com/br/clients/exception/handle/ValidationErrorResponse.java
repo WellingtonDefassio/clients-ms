@@ -1,4 +1,4 @@
-package bcb.com.br.clients.controller.handle;
+package bcb.com.br.clients.exception.handle;
 
 import lombok.Data;
 

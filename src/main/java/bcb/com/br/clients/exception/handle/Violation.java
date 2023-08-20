@@ -1,4 +1,4 @@
-package bcb.com.br.clients.controller.handle;
+package bcb.com.br.clients.exception.handle;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -6,6 +6,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class Violation {
-  private final String fieldName;
   private final String message;
 }

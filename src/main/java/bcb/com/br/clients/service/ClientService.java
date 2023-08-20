@@ -2,7 +2,9 @@ package bcb.com.br.clients.service;
 
 import bcb.com.br.clients.controller.dto.CreateClientRequest;
 import bcb.com.br.clients.controller.dto.CreateClientResponse;
+import bcb.com.br.clients.controller.dto.GetClientResponse;
 import bcb.com.br.clients.domain.entity.Client;
+import bcb.com.br.clients.exception.ClientNotFoundException;
 import bcb.com.br.clients.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,4 +21,8 @@ public class ClientService {
         return new CreateClientResponse().fromModel(client);
     }
 
+    public GetClientResponse getClient(String cnpj) {
+        Client client = clientRepository.getClientByCnpj(cnpj).orElseThrow(ClientNotFoundException::new);
+        return new GetClientResponse().fromModel(client);
+    }
 }
