@@ -1,6 +1,7 @@
 package bcb.com.br.clients.exception.handle;
 
 import bcb.com.br.clients.exception.ClientNotFoundException;
+import bcb.com.br.clients.exception.InsufficientValueException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -50,6 +51,10 @@ public class ErrorHandlingControllerAdvice {
 
     @ExceptionHandler(ClientNotFoundException.class)
     ResponseEntity<Violation> duplicatedCnpj(ClientNotFoundException e) {
+        return new ResponseEntity<>(new Violation(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(InsufficientValueException.class)
+    ResponseEntity<Violation> insufficientValue(InsufficientValueException e) {
         return new ResponseEntity<>(new Violation(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 

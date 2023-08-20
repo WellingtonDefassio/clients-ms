@@ -3,6 +3,7 @@ package bcb.com.br.clients.controller;
 import bcb.com.br.clients.controller.dto.CreateClientRequest;
 import bcb.com.br.clients.controller.dto.CreateClientResponse;
 import bcb.com.br.clients.controller.dto.GetClientResponse;
+import bcb.com.br.clients.controller.dto.ReceiveEntries;
 import bcb.com.br.clients.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,15 @@ public class ClientController {
     @GetMapping()
     public ResponseEntity<GetClientResponse> get(@RequestParam String cnpj) {
         return new ResponseEntity<>(clientService.getClient(cnpj), HttpStatus.OK);
+    }
+
+    @PostMapping("/value")
+    public ResponseEntity<GetClientResponse> addValue(@RequestBody ReceiveEntries receiveEntries) {
+      return ResponseEntity.ok(clientService.addValue(receiveEntries));
+    }
+
+    @PostMapping("/charge")
+    public ResponseEntity<GetClientResponse> chargeValue(@RequestBody ReceiveEntries receiveEntries) {
+        return ResponseEntity.ok(clientService.chargeMessage(receiveEntries));
     }
 }
