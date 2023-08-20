@@ -1,15 +1,17 @@
 package bcb.com.br.clients.domain.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
+import java.util.UUID;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
 
 @Entity(name = "clients")
 @Data
@@ -17,8 +19,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     @NotEmpty
     private String name;
     @Email
@@ -36,8 +38,7 @@ public class Client {
     private String cnpj;
     @NotEmpty
     private String companyName;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "balance_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "clientId")
     private Balance balance;
 
 }

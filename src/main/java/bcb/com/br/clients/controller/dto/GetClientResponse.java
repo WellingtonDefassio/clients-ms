@@ -6,13 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetClientResponse {
 
-    private Long id;
+    private UUID id;
 
     private String name;
 
@@ -32,6 +34,7 @@ public class GetClientResponse {
         return GetClientResponse.builder()
                 .id(client.getId())
                 .email(client.getEmail())
+                .name(client.getName())
                 .telephone(client.getTelephone())
                 .cpf(client.getCpf())
                 .cnpj(client.getCnpj())

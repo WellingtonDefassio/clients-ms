@@ -1,11 +1,12 @@
 package bcb.com.br.clients.domain.entity;
 
 import bcb.com.br.clients.domain.enums.CurrentType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
 
 @Entity(name = "balances")
 @Data
@@ -20,7 +21,8 @@ public class Balance {
     private Double currentRate;
     @Enumerated(EnumType.STRING)
     private CurrentType currentType;
-    @OneToOne(mappedBy = "balance")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client clientId;
 
 }

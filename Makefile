@@ -4,3 +4,5 @@ db_delete:
 	docker rm -f postgres12
 db:
 	docker run postgres12
+rabbit:
+	docker run -d --hostname my-rabbit --name rabbirmq -p 15672:15672 -p 5672:5672 rabbitmq:3-management
