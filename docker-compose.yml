@@ -26,6 +26,8 @@ services:
       POSTGRES_DB: messages
     ports:
       - "5433:5432"
+    depends_on:
+      - db-client
 
   db-entries:
     container_name: db-entries
@@ -39,8 +41,8 @@ services:
       POSTGRES_DB: entries
     ports:
       - "5434:5432"
-
-
+    depends_on:
+      - db-messages
 
   client-ms:
     image: welldefassio/clientes-ms:tagname
@@ -51,8 +53,9 @@ services:
     environment:
       CLIENT_DB: db-client
     depends_on:
-      - db-client
       - rabbitmq
+    links:
+      - db-client
 
   messages-ms:
     image: welldefassio/messages-ms:tagname
@@ -67,9 +70,9 @@ services:
       DB_NAME: messages
       CLIENT_MS: client-ms
     depends_on:
-      - db-client
       - rabbitmq
-      - client-ms
+    links:
+      - db-messages
 
   entries-ms:
     image: welldefassio/entries-ms:tagname
@@ -84,11 +87,11 @@ services:
       DB_NAME: entries
       CLIENT_MS: client-ms
     depends_on:
-      - db-entries
       - rabbitmq
       - client-ms
       - messages-ms
-
+    links:
+      - db-entries
 
   financial-ms:
     image: welldefassio/financial-ms:tagname
