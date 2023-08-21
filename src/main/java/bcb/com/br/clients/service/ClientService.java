@@ -45,7 +45,8 @@ public class ClientService {
     }
 
     private void freePosLimit(ReceiveEntries receiveEntries, Client client) {
-        if (client.getBalance().getCurrentExpense() < receiveEntries.getValue()) {
+        double value = client.getBalance().getCurrentExpense() - receiveEntries.getValue();
+        if (value >= 0) {
             client.getBalance().setCurrentExpense(client.getBalance().getCurrentExpense() - receiveEntries.getValue());
             clientRepository.save(client);
         }

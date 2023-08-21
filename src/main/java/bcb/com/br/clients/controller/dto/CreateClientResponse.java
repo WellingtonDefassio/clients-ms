@@ -34,6 +34,7 @@ public class CreateClientResponse {
     public CreateClientResponse fromModel(Client client, Balance balance) {
         return CreateClientResponse.builder()
                 .id(client.getId())
+                .name(client.getName())
                 .email(client.getEmail())
                 .telephone(client.getTelephone())
                 .cpf(client.getCpf())
