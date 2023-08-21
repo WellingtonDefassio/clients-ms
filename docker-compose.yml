@@ -5,7 +5,7 @@ services:
     container_name: db-client
     image: postgres:12-alpine
     networks:
-      - bcb-nt
+      - client-nt
     restart: always
     environment:
       POSTGRES_PASSWORD: secret
@@ -14,19 +14,104 @@ services:
     ports:
       - "5432:5432"
 
+  db-messages:
+    container_name: db-message
+    image: postgres:12-alpine
+    networks:
+      - client-nt
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: root
+      POSTGRES_DB: messages
+    ports:
+      - "5433:5432"
+
+  db-entries:
+    container_name: db-entries
+    image: postgres:12-alpine
+    networks:
+      - client-nt
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: root
+      POSTGRES_DB: entries
+    ports:
+      - "5434:5432"
+
+
 
   client-ms:
     image: welldefassio/clientes-ms:tagname
     networks:
-      - bcb-nt
+      - client-nt
     ports:
       - "8080:8080"
     environment:
       CLIENT_DB: db-client
     depends_on:
       - db-client
+      - rabbitmq
+
+  messages-ms:
+    image: welldefassio/messages-ms:tagname
+    networks:
+      - client-nt
+    ports:
+      - "8082:8082"
+    environment:
+      CLIENT_DB: db-messages
+      CLIENT_PORT: 5432
+      RABBIT_HOST: rabbitmq
+      DB_NAME: messages
+      CLIENT_MS: client-ms
+    depends_on:
+      - db-client
+      - rabbitmq
+      - client-ms
+
+  entries-ms:
+    image: welldefassio/entries-ms:tagname
+    networks:
+      - client-nt
+    ports:
+      - "8083:8083"
+    environment:
+      CLIENT_DB: db-entries
+      CLIENT_PORT: 5432
+      RABBIT_HOST: rabbitmq
+      DB_NAME: entries
+      CLIENT_MS: client-ms
+    depends_on:
+      - db-entries
+      - rabbitmq
+      - client-ms
+      - messages-ms
+
+
+  financial-ms:
+    image: welldefassio/financial-ms:tagname
+    networks:
+      - client-nt
+    ports:
+      - "8081:8081"
+    environment:
+      RABBIT_HOST: rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - client-nt
+
 
 
 networks:
-  bcb-nt:
+  client-nt:
     driver: bridge
+
+
