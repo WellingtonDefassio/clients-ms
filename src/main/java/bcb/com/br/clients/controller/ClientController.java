@@ -1,9 +1,6 @@
 package bcb.com.br.clients.controller;
 
-import bcb.com.br.clients.controller.dto.CreateClientRequest;
-import bcb.com.br.clients.controller.dto.CreateClientResponse;
-import bcb.com.br.clients.controller.dto.GetClientResponse;
-import bcb.com.br.clients.controller.dto.ReceiveEntries;
+import bcb.com.br.clients.controller.dto.*;
 import bcb.com.br.clients.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +34,15 @@ public class ClientController {
     @PostMapping("/charge")
     public ResponseEntity<GetClientResponse> chargeValue(@RequestBody ReceiveEntries receiveEntries) {
         return ResponseEntity.ok(clientService.chargeMessage(receiveEntries));
+    }
+
+    @PutMapping("/limit")
+    public ResponseEntity<GetClientResponse> changeLimit(@RequestBody ChangeLimitRequest request) {
+        return ResponseEntity.ok(clientService.changeLimit(request));
+    }
+
+    @PutMapping("/type")
+    public ResponseEntity<GetClientResponse> changeType(@RequestBody ChangeTypeRequest request) {
+        return ResponseEntity.ok(clientService.changeType(request));
     }
 }

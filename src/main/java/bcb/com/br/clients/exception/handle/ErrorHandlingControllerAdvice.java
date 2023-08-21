@@ -1,7 +1,10 @@
 package bcb.com.br.clients.exception.handle;
 
 import bcb.com.br.clients.exception.ClientNotFoundException;
+import bcb.com.br.clients.exception.ClientPreException;
 import bcb.com.br.clients.exception.InsufficientValueException;
+import bcb.com.br.clients.exception.InvalidNewLimitException;
+import bcb.com.br.clients.service.ClientPosException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -55,6 +58,18 @@ public class ErrorHandlingControllerAdvice {
     }
     @ExceptionHandler(InsufficientValueException.class)
     ResponseEntity<Violation> insufficientValue(InsufficientValueException e) {
+        return new ResponseEntity<>(new Violation(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(InvalidNewLimitException.class)
+    ResponseEntity<Violation> invalidNewLimitException(InvalidNewLimitException e) {
+        return new ResponseEntity<>(new Violation(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ClientPosException.class)
+    ResponseEntity<Violation> invalidNewLimitException(ClientPosException e) {
+        return new ResponseEntity<>(new Violation(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ClientPreException.class)
+    ResponseEntity<Violation> invalidNewLimitException(ClientPreException e) {
         return new ResponseEntity<>(new Violation(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
